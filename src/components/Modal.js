@@ -25,10 +25,6 @@ export default function Modal({ children, name }) {
     return (
         <>
             <button
-                // style={{
-                // width: '100px',
-                // height: '70px',
-                // display: 'inline-block'}}
                 onClick={() => setShouldShow(true)}>
                     {name}
             </button>
