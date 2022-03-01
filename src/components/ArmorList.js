@@ -22,23 +22,22 @@ export default function ArmorList() {
     const [selectedWaist, setSelectedWaist] = useState({})
     const [selectedLegs, setSelectedLegs] = useState({})
 
-    const handleListItemClick = (event, index, type, name, skills) => {
+    const handleListItemClick = (index, type, name, skills, slots) => {
         switch(type) {
             case 'head':
-              return setSelectedHead({id: index, name: name, skills: skills})
+              return setSelectedHead({id: index, name: name, skills: skills, slots: slots})
             case 'chest':
-                return setSelectedChest({id: index, name: name, skills: skills})
+                return setSelectedChest({id: index, name: name, skills: skills, slots: slots})
             case 'gloves':
-                return setSelectedGloves({id: index, name: name, skills: skills})
+                return setSelectedGloves({id: index, name: name, skills: skills, slots: slots})
             case 'waist':
-                return setSelectedWaist({id: index, name: name, skills: skills})
+                return setSelectedWaist({id: index, name: name, skills: skills, slots: slots})
             case 'legs':
-                return setSelectedLegs({id: index, name: name, skills: skills})
+                return setSelectedLegs({id: index, name: name, skills: skills, slots: slots})
             default:
               return
-          }
-    };
-
+        }
+    }
   
     useEffect(() => {
         (async () => {
@@ -52,22 +51,22 @@ export default function ArmorList() {
             <Box sx={{ flexGrow: 1 }}>
                 <AppBar position="fixed">
                     <Toolbar>
-                        <Avatar alt="Remy Sharp" src={menuIcon} style={{marginRight: '1em'}}/>
+                        <Avatar alt="menuIcon" src={menuIcon} style={{marginRight: '1em'}}/>
                         <Typography variant="h6" component="div" sx={{ flexGrow: 1 }}>
                             MHW Armor Simulator
                         </Typography>
                         
                         <Modal name="Equipment">
                             <section style={{ 
-                                display: 'flex', 
-                                alignItems: 'center', 
-                                justifyContent: 'center', 
-                                margin: '2em'
+                                // display: 'flex', 
+                                // alignItems: 'center', 
+                                // justifyContent: 'center', 
+                                // margin: '2em'
                             }}>
                                 <Box 
                                     sx={{ 
                                         width: '100%', 
-                                        maxWidth: 360, 
+                                        // maxWidth: 360, 
                                         backgroundColor: "grey",
                                 }}>
                                     <CurrentEquipment 
@@ -83,7 +82,7 @@ export default function ArmorList() {
                 </AppBar>
             </Box>
             
-            <Grid container spacing={2}>
+            <Grid container spacing={2} sx={{ marginLeft: '2em', paddingTop: '5em'}}>
                 {armorList.map(armor =>
                     <Grid item xs={3} key={armor.id}>
                         <ArmorSet 

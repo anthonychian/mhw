@@ -10,9 +10,11 @@ const ModalBackground = styled.div`
     height: 100%;
     overflow: auto;
     background-color: rgba(0, 0, 0, 0.5);
+    overflow-y: hidden;
 `
 const ModalBody = styled.div`
-    background-color: white;
+    background-color: #1F2023;
+    opacity: 95%;
     margin: 10% auto;
     padding: 20px;
     width: 50%;
