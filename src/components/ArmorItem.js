@@ -35,7 +35,7 @@ const useStyles = makeStyles({
             },
         },
         '&:hover': {
-            opacity: 0.5,
+            opacity: 0.7,
             '& .MuiListItemText-primary': {
                 color: 'yellow',
             },
