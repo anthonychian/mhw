@@ -18,12 +18,6 @@ export default function ArmorSet({ armor }) {
                 {armor.pieces.map(item =>
                     <ArmorItem 
                         item={item}
-                        // selectedHead={selectedHead}
-                        // selectedChest={selectedChest}
-                        // selectedGloves={selectedGloves}
-                        // selectedWaist={selectedWaist}
-                        // selectedLegs={selectedLegs}
-                        // handleListItemClick={handleListItemClick}
                         key={item.id} />
                 )}
             </List>
