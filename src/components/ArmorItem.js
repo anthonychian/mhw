@@ -17,7 +17,31 @@ const useStyles = makeStyles({
     tooltip: {
       background: '#1a1c1a',
     },
-  });
+    listItemSelected: {
+        width: '100%', 
+        maxWidth: 360, 
+        backgroundColor: "#1F2023",
+        '& .MuiListItemText-primary': {
+            color: 'white',
+        },
+        "&.Mui-selected": {
+            backgroundColor: 'black',
+            '&:hover': {
+                backgroundColor: "black",
+            },
+            '& .MuiListItemText-primary': {
+                color: 'white',
+                fontWeight: 'bold',
+            },
+        },
+        '&:hover': {
+            opacity: 0.5,
+            '& .MuiListItemText-primary': {
+                color: 'yellow',
+            },
+        },
+    },
+});
 
 function ArmorItem ({ 
     item,
@@ -51,16 +75,17 @@ function ArmorItem ({
                 disableInteractive>
 
                 <ListItemButton
-                    sx={{ 
-                        width: '100%', 
-                        maxWidth: 360, 
-                        backgroundColor: "#1F2023",
-                        '&:hover': {
-                            backgroundColor: "#1F2023",
-                            color: 'black',
-                            opacity: 0.5,
-                        },
-                    }}
+                    // sx={{ 
+                    //     width: '100%', 
+                    //     maxWidth: 360, 
+                    //     backgroundColor: "#1F2023",
+                    //     '&:hover': {
+                    //         backgroundColor: "#1F2023",
+                    //         color: 'black',
+                    //         opacity: 0.5,
+                    //     },
+                    // }}
+                    classes={{root: classes.listItemSelected }}
                     selected={armors.some(armor => armor['name'] === item.name )}
                     onClick={() => {
                         onEquipPressed(item.id, item.type, item.name, itemSkills, item.slots)
@@ -70,7 +95,9 @@ function ArmorItem ({
                         <ArmorIcon type={item.type} />
                     </ListItemIcon>
 
-                    <ListItemText sx={{ color: 'white' }}primary={item.name} />
+                    <ListItemText 
+                        
+                        primary={item.name} />
                     
                 </ListItemButton>
             </Tooltip>
