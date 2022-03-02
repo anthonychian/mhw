@@ -10,30 +10,27 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { connect } from 'react-redux'
+import { equipArmor } from '../redux/actions'
+
 const useStyles = makeStyles({
     tooltip: {
       background: '#1a1c1a',
     },
   });
 
-export default function ArmorItem ({ 
+function ArmorItem ({ 
     item,
-    selectedHead,
-    selectedChest,
-    selectedGloves,
-    selectedWaist,
-    selectedLegs,
-    handleListItemClick
-    }) {
+    armors, 
+    onEquipPressed, }) {
 
     const classes = useStyles();
-
-    let isSelected = selectedHead.id === item.id || selectedChest.id === item.id || selectedGloves.id === item.id || selectedWaist.id === item.id || selectedLegs.id === item.id
 
     let itemSkills = []
     item.skills.forEach(skill => {
         itemSkills.push(skill.skillName + " " + skill.level)
     })
+
 
     return (
         <>
@@ -64,9 +61,9 @@ export default function ArmorItem ({
                             opacity: 0.5,
                         },
                     }}
-                    selected={isSelected}
+                    selected={armors.some(armor => armor['name'] === item.name )}
                     onClick={() => {
-                        handleListItemClick( item.id, item.type, item.name, itemSkills, item.slots)
+                        onEquipPressed(item.id, item.type, item.name, itemSkills, item.slots)
                     }}
                 >
                     <ListItemIcon>
@@ -82,3 +79,13 @@ export default function ArmorItem ({
         </>
     )
 }
+
+const mapStateToProps = state => ({
+    armors: state.armors,
+})
+
+const mapDispatchToProps = dispatch => ({
+    onEquipPressed: (id, type, name, skills, slots) => dispatch(equipArmor(id, type, name, skills, slots)),
+})
+
+export default connect(mapStateToProps, mapDispatchToProps)(ArmorItem)

@@ -4,15 +4,7 @@ import ArmorItem from "./ArmorItem"
 import Box from '@mui/material/Box';
 import List from '@mui/material/List';
 
-export default function ArmorSet({ 
-    armor,
-    selectedHead,
-    selectedChest,
-    selectedGloves,
-    selectedWaist,
-    selectedLegs,
-    handleListItemClick
-    }) {
+export default function ArmorSet({ armor }) {
 
     return (
         <Box 
@@ -26,12 +18,12 @@ export default function ArmorSet({
                 {armor.pieces.map(item =>
                     <ArmorItem 
                         item={item}
-                        selectedHead={selectedHead}
-                        selectedChest={selectedChest}
-                        selectedGloves={selectedGloves}
-                        selectedWaist={selectedWaist}
-                        selectedLegs={selectedLegs}
-                        handleListItemClick={handleListItemClick}
+                        // selectedHead={selectedHead}
+                        // selectedChest={selectedChest}
+                        // selectedGloves={selectedGloves}
+                        // selectedWaist={selectedWaist}
+                        // selectedLegs={selectedLegs}
+                        // handleListItemClick={handleListItemClick}
                         key={item.id} />
                 )}
             </List>

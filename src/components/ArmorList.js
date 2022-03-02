@@ -16,28 +16,6 @@ import CurrentEquipment from './CurrentEquipment';
 export default function ArmorList() {
 
     const [armorList, setArmorList] = useState([])
-    const [selectedHead, setSelectedHead] = useState({})
-    const [selectedChest, setSelectedChest] = useState({})
-    const [selectedGloves, setSelectedGloves] = useState({})
-    const [selectedWaist, setSelectedWaist] = useState({})
-    const [selectedLegs, setSelectedLegs] = useState({})
-
-    const handleListItemClick = (index, type, name, skills, slots) => {
-        switch(type) {
-            case 'head':
-              return setSelectedHead({id: index, name: name, skills: skills, slots: slots})
-            case 'chest':
-                return setSelectedChest({id: index, name: name, skills: skills, slots: slots})
-            case 'gloves':
-                return setSelectedGloves({id: index, name: name, skills: skills, slots: slots})
-            case 'waist':
-                return setSelectedWaist({id: index, name: name, skills: skills, slots: slots})
-            case 'legs':
-                return setSelectedLegs({id: index, name: name, skills: skills, slots: slots})
-            default:
-              return
-        }
-    }
   
     useEffect(() => {
         (async () => {
@@ -69,12 +47,7 @@ export default function ArmorList() {
                                         // maxWidth: 360, 
                                         backgroundColor: "grey",
                                 }}>
-                                    <CurrentEquipment 
-                                        selectedHead={selectedHead}
-                                        selectedChest={selectedChest}
-                                        selectedGloves={selectedGloves}
-                                        selectedWaist={selectedWaist}
-                                        selectedLegs={selectedLegs} />
+                                    <CurrentEquipment />
                                 </Box>
                             </section>
                         </Modal>
@@ -87,12 +60,6 @@ export default function ArmorList() {
                     <Grid item xs={3} key={armor.id}>
                         <ArmorSet 
                             armor={armor}
-                            selectedHead={selectedHead}
-                            selectedChest={selectedChest}
-                            selectedGloves={selectedGloves}
-                            selectedWaist={selectedWaist}
-                            selectedLegs={selectedLegs}
-                            handleListItemClick={handleListItemClick}
                             key={armor.id} />
                     </Grid>
                 )}

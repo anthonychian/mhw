@@ -10,23 +10,21 @@ import Tooltip from '@mui/material/Tooltip';
 
 import { makeStyles } from '@material-ui/core/styles';
 
+import { connect } from 'react-redux'
+
 const useStyles = makeStyles({
     tooltip: {
       background: '#1a1c1a',
     },
   });
 
-export default function CurrentEquipment({
-    selectedHead,
-    selectedChest,
-    selectedGloves,
-    selectedWaist,
-    selectedLegs,
-    }) {
+function CurrentEquipment({ armors }) {
 
     const classes = useStyles();
 
     const allSkills =  new Map()
+
+    const allSlots = new Map()
     
     function setSkills(arr) {
         arr.forEach(skill => {
@@ -41,221 +39,77 @@ export default function CurrentEquipment({
         })
     }
 
-    if (selectedHead.skills)
-        setSkills(selectedHead.skills)
-    if (selectedChest.skills)
-        setSkills(selectedChest.skills)
-    if (selectedGloves.skills)
-        setSkills(selectedGloves.skills)
-    if (selectedWaist.skills)
-        setSkills(selectedWaist.skills)
-    if (selectedLegs.skills)
-        setSkills(selectedLegs.skills)
+    function setSlots(arr) {
+        arr.forEach(slot => {
+            if (allSlots.has(slot.rank)) {
+                allSlots.set(slot.rank, allSlots.get(slot.rank) + 1)
+            } 
+            else {
+                allSlots.set(slot.rank, 1)
+            }
+        })
+    }
+    console.log(allSlots)
 
+    for (const property in armors) {
+        const item = armors[property]
+        if (item.skills) {
+            setSkills(item.skills)
+        }
+        if (item.slots) {
+            setSlots(item.slots)
+        }
+    }
 
     return (
         <>
-            <section style={{ 
-                    margin: '2em'
-            }}>
-                <div>
-                    <Tooltip
-                        classes={classes}
-                        title={
-                            <>
-                                {selectedHead.skills.map(skill => 
-                                    <h2 key={skill} style={{ color: "yellow"}}>
-                                        {`${skill.slice(0, -1)} x${skill.slice(-1)}`}
-                                    </h2>
-                                )}
-                                {Object.values(selectedHead.slots).map((slot, idx) => 
-                                    <SlotIcon key={idx} number={slot.rank} />
-                                )}
-                            </>
-                        }
-                        placement="right-start"
-                        disableInteractive>
-                        <ListItemButton
-                            sx={{ 
-                                width: '100%', 
-                                maxWidth: 250, 
-                                backgroundColor: "#1F2023",
-                                '&:hover': {
+            <section style={{ margin: '2em' }}>
+                {Object.values(armors).map((item, idx) => 
+                    <div key={idx}>
+                        {item.skills && <Tooltip
+                            classes={classes}
+                            title={
+                                <>
+                                    {item.skills.map(skill => 
+                                        <h2 key={skill} style={{ color: "yellow"}}>
+                                            {`${skill.slice(0, -1)} x${skill.slice(-1)}`}
+                                        </h2>
+                                    )}
+                                    {Object.values(item.slots).map((slot, idx) => 
+                                        <SlotIcon key={idx} number={slot.rank} />
+                                    )}
+                                </>
+                            }
+                            placement="right-start"
+                            disableInteractive>
+
+                            <ListItemButton
+                                sx={{ 
+                                    width: '100%', 
+                                    maxWidth: 250, 
                                     backgroundColor: "#1F2023",
-                                    color: 'black',
-                                    opacity: 0.5,
-                                },
-                            }}
-                        >
-                            <ListItemIcon>
-                                <ArmorIcon type="head" />
-                            </ListItemIcon>
+                                    '&:hover': {
+                                        backgroundColor: "#1F2023",
+                                        color: 'black',
+                                        opacity: 0.5,
+                                    },
+                            }}>
 
-                            <ListItemText sx={{ color: 'white' }} primary={selectedHead.name} />
-                            
-                        </ListItemButton>
-                    </Tooltip>
+                                <ListItemIcon>
+                                    <ArmorIcon type={item.type} />
+                                </ListItemIcon>
 
-                    <Divider />
+                                <ListItemText sx={{ color: 'white' }} primary={item.name} />
+                                
+                            </ListItemButton>
+                        </Tooltip>}
 
-                    <Tooltip
-                        classes={classes}
-                        title={
-                            <>
-                                {selectedChest.skills.map(skill => 
-                                    <h2 key={skill} style={{ color: "yellow"}}>
-                                        {`${skill.slice(0, -1)} x${skill.slice(-1)}`}
-                                    </h2>
-                                )}
-                                {Object.values(selectedChest.slots).map((slot, idx) => 
-                                    <SlotIcon key={idx} number={slot.rank} />
-                                )}
-                            </>
-                        }
-                        placement="right-start"
-                        disableInteractive>
-                        <ListItemButton
-                            sx={{ 
-                                width: '100%', 
-                                maxWidth: 250, 
-                                backgroundColor: "#1F2023",
-                                '&:hover': {
-                                    backgroundColor: "#1F2023",
-                                    color: 'black',
-                                    opacity: 0.5,
-                                },
-                            }}
-                        >
-                            <ListItemIcon>
-                                <ArmorIcon type="chest" />
-                            </ListItemIcon>
-
-                            <ListItemText sx={{ color: 'white' }} primary={selectedChest.name} />
-                            
-                        </ListItemButton>
-                    </Tooltip>
-
-                    <Divider />
-
-                    <Tooltip
-                        classes={classes}
-                        title={
-                            <>
-                                {selectedGloves.skills.map(skill => 
-                                    <h2 key={skill} style={{ color: "yellow"}}>
-                                        {`${skill.slice(0, -1)} x${skill.slice(-1)}`}
-                                    </h2>
-                                )}
-                                {Object.values(selectedGloves.slots).map((slot, idx) => 
-                                    <SlotIcon key={idx} number={slot.rank} />
-                                )}
-                            </>
-                        }
-                        placement="right-start"
-                        disableInteractive>
-                        <ListItemButton
-                            sx={{ 
-                                width: '100%', 
-                                maxWidth: 250, 
-                                backgroundColor: "#1F2023",
-                                '&:hover': {
-                                    backgroundColor: "#1F2023",
-                                    color: 'black',
-                                    opacity: 0.5,
-                                },
-                            }}
-                        >
-                            <ListItemIcon>
-                                <ArmorIcon type="gloves" />
-                            </ListItemIcon>
-
-                            <ListItemText sx={{ color: 'white' }} primary={selectedGloves.name} />
-                            
-                        </ListItemButton>
-                    </Tooltip>
-
-                    <Divider />
-
-                    <Tooltip
-                        classes={classes}
-                        title={
-                            <>
-                                {selectedWaist.skills.map(skill => 
-                                    <h2 key={skill} style={{ color: "yellow"}}>
-                                        {`${skill.slice(0, -1)} x${skill.slice(-1)}`}
-                                    </h2>
-                                )}
-                                {Object.values(selectedWaist.slots).map((slot, idx) => 
-                                    <SlotIcon key={idx} number={slot.rank} />
-                                )}
-                            </>
-                        }
-                        placement="right-start"
-                        disableInteractive>
-                        <ListItemButton
-                            sx={{ 
-                                width: '100%', 
-                                maxWidth: 250, 
-                                backgroundColor: "#1F2023",
-                                '&:hover': {
-                                    backgroundColor: "#1F2023",
-                                    color: 'black',
-                                    opacity: 0.5,
-                                },
-                            }}
-                        >
-                            <ListItemIcon>
-                                <ArmorIcon type="waist" />
-                            </ListItemIcon>
-
-                            <ListItemText sx={{ color: 'white' }} primary={selectedWaist.name} />
-                            
-                        </ListItemButton>
-                    </Tooltip>
-
-                    <Divider />
-
-                    <Tooltip
-                        classes={classes}
-                        title={
-                            <>
-                                {selectedLegs.skills.map(skill => 
-                                    <h2 key={skill} style={{ color: "yellow"}}>
-                                        {`${skill.slice(0, -1)} x${skill.slice(-1)}`}
-                                    </h2>
-                                )}
-                                {Object.values(selectedLegs.slots).map((slot, idx) => 
-                                    <SlotIcon key={idx} number={slot.rank} />
-                                )}
-                            </>
-                        }
-                        placement="right-start"
-                        disableInteractive>
-                        <ListItemButton
-                            sx={{ 
-                                width: '100%', 
-                                maxWidth: 250, 
-                                backgroundColor: "#1F2023",
-                                '&:hover': {
-                                    backgroundColor: "#1F2023",
-                                    color: 'black',
-                                    opacity: 0.5,
-                                },
-                            }}
-                        >
-                            <ListItemIcon>
-                                <ArmorIcon type="legs" />
-                            </ListItemIcon>
-
-                            <ListItemText sx={{ color: 'white' }} primary={selectedLegs.name} />
-                            
-                        </ListItemButton>
-                    </Tooltip>
-
-                    <Divider />
-
-                </div>
+                        <Divider />
+                    </div>
+                )}
             </section>
+
+            
 
             <section style={{ 
                 display: 'flex', 
@@ -267,12 +121,28 @@ export default function CurrentEquipment({
                     {Array.from(allSkills).map(skill => 
                     
                         <h3 key={skill} style={{ color: "white" }}>
-                            {`${skill.slice(0, 1)} x${skill.slice(-1)}`}
+                            {`${skill.slice(0, 1)} x ${skill.slice(-1)}`}
                         </h3>
                         
+                    )}
+                </div>
+                <div style={{margin: '2em'}}>
+                    {Array.from(allSlots).map(slot => 
+                        <div key={slot}>
+                            <SlotIcon number={parseInt(slot.slice(0, 1))} />
+                            <span style={{ color: "white" }}>
+                                {` x ${slot.slice(-1)}`}
+                            </span>
+                        </div>
                     )}
                 </div>
             </section>
         </> 
     )
 }
+
+const mapStateToProps = state => ({
+    armors: state.armors,
+})
+
+export default connect(mapStateToProps)(CurrentEquipment)

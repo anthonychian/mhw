@@ -33,7 +33,7 @@ export default function Modal({ children, name }) {
             {shouldShow && (
                 <ModalBackground onClick={() => setShouldShow(false)}>
                     <ModalBody onClick={e => e.stopPropagation()}>
-                    <button onClick={() => setShouldShow(false)}>Hide Modal</button>
+                    <button onClick={() => setShouldShow(false)}>Hide Equipment</button>
                         {children}
                     </ModalBody>
                 </ModalBackground>

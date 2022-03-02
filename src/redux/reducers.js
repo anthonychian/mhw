@@ -5,11 +5,19 @@ export const armors = (state = [], action) => {
 
     switch (type) {
         case EQUIP_ARMOR: {
-            const { text } = payload
-            const newArmor = {
-                text,
-            }
-            return state.concat(newArmor)
+            const ordering = {
+                "head": 1, 
+                "chest": 2, 
+                "gloves": 3, 
+                "waist": 4, 
+                "legs": 5
+            };
+            const armorType = payload.type
+            return state.filter(armor => armor.type !== armorType)
+                .concat(payload)
+                .sort(function(a, b) { 
+                    return ordering[a.type] - ordering[b.type]
+                })
         }
         default: 
             return state
